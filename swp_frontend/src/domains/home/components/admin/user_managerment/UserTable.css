@@ -1,0 +1,621 @@
+.users-table-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    overflow-x: auto;
+    /* Cho phép scroll ngang trên mobile */
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+.users-table th {
+    background: #f8f9fa;
+    padding: 16px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #e0e0e0;
+    white-space: nowrap;
+}
+
+.users-table td {
+    padding: 16px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.users-table tr:hover {
+    background: #f8f9fa;
+}
+
+.users-table tr.selected {
+    background: #e3f2fd;
+}
+
+.checkbox-cell {
+    width: 40px;
+    text-align: center;
+}
+
+.checkbox-cell input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Cập nhật user-cell */
+.user-cell {
+    align-items: center;
+    gap: 7px;
+    min-width: 200px;
+    /* border: 1px solid black; */
+
+}
+
+.user-avatar {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    /* border: 1px solid black; */
+    color: white;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.user-info {
+    flex: 1;
+    min-width: 0;
+    /* Cho phép text overflow */
+}
+
+.user-name {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-email {
+    font-size: 12px;
+    color: #7f8c8d;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Thêm styles cho mobile */
+@media (max-width: 768px) {
+
+    .users-table th,
+    .users-table td {
+        padding: 12px 8px;
+        font-size: 13px;
+    }
+
+    .user-cell {
+        min-width: 150px;
+    }
+
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+    }
+
+    .user-name {
+        font-size: 14px;
+    }
+
+    .user-email {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .users-table th,
+    .users-table td {
+        padding: 10px 6px;
+    }
+
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .user-cell {
+        gap: 8px;
+    }
+
+    .user-name {
+        font-size: 13px;
+    }
+
+    .user-email {
+        font-size: 10px;
+    }
+}
+
+/* Styles mới cho các cell */
+.status-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 100px;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    min-width: 80px;
+    text-align: center;
+}
+
+.status-active {
+    background: #d5f4e6;
+    color: #27ae60;
+}
+
+.status-inactive {
+    background: #f2f3f4;
+    color: #95a5a6;
+}
+
+.status-locked {
+    background: #ffeaea;
+    color: #e74c3c;
+}
+
+.btn-unlock {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-unlock:hover {
+    background: #2980b9;
+}
+
+.email-cell {
+    min-width: 200px;
+}
+
+.email-text {
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.email-verified {
+    margin-top: 4px;
+}
+
+.verified {
+    background: #d5f4e6;
+    color: #27ae60;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.btn-verify {
+    background: #f39c12;
+    color: white;
+    border: none;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.btn-verify:hover {
+    background: #e67e22;
+}
+
+.login-cell {
+    min-width: 150px;
+}
+
+.login-time {
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sessions-count {
+    font-size: 11px;
+    color: #7f8c8d;
+    margin-top: 4px;
+}
+
+.failed-logins-cell {
+    text-align: center;
+    min-width: 80px;
+}
+
+.failed-count {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+.failed-warning {
+    font-size: 11px;
+    color: #f39c12;
+    margin-top: 4px;
+}
+
+/* Role badges cập nhật */
+.role-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    min-width: 120px;
+    text-align: center;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.role-super-admin {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+    color: white;
+}
+
+.role-admin {
+    background: #ffeaea;
+    color: #e74c3c;
+}
+
+.role-moderator {
+    background: #fff3cd;
+    color: #f39c12;
+}
+
+.role-user {
+    background: #e3f2fd;
+    color: #3498db;
+}
+
+.role-guest {
+    background: #f2f3f4;
+    color: #7f8c8d;
+}
+
+/* Actions buttons */
+.actions-cell {
+    white-space: nowrap;
+    min-width: 120px;
+}
+
+.btn-action {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.btn-action:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-edit {
+    background: #e3f2fd;
+    color: #3498db;
+}
+
+.btn-edit:hover:not(:disabled) {
+    background: #bbdefb;
+}
+
+.btn-delete {
+    background: #ffeaea;
+    color: #e74c3c;
+}
+
+.btn-delete:hover:not(:disabled) {
+    background: #ffcdd2;
+}
+
+/* Responsive cho các control */
+@media (max-width: 768px) {
+    .status-badge {
+        padding: 4px 8px;
+        font-size: 11px;
+        min-width: 70px;
+    }
+
+    .role-badge {
+        padding: 4px 8px;
+        font-size: 11px;
+        min-width: 100px;
+    }
+
+    .btn-action {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    .email-cell,
+    .login-cell {
+        min-width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .status-badge,
+    .role-badge {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+
+    .btn-action {
+        padding: 3px 6px;
+        font-size: 10px;
+    }
+
+    .actions-cell {
+        min-width: 100px;
+    }
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    width: 100%;
+}
+
+.empty-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.3;
+}
+
+.empty-state h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.empty-state p {
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+/* Card view cho mobile thật nhỏ */
+@media (max-width: 640px) {
+    .users-table {
+        display: block;
+        min-width: 100%;
+    }
+
+    .users-table thead {
+        display: none;
+    }
+
+    .users-table tbody {
+        display: block;
+    }
+
+    .users-table tr {
+        display: block;
+        margin-bottom: 15px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .users-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .users-table td:last-child {
+        border-bottom: none;
+    }
+
+    .users-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 13px;
+        flex: 0 0 120px;
+    }
+
+    .user-cell {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 8px;
+    }
+
+    .user-avatar {
+        width: 48px;
+        height: 48px;
+        font-size: 16px;
+    }
+
+    .user-info {
+        text-align: center;
+    }
+
+    .user-name {
+        font-size: 16px;
+        white-space: normal;
+    }
+
+    .user-email {
+        font-size: 13px;
+        white-space: normal;
+    }
+
+    .checkbox-cell {
+        display: none;
+    }
+
+    .actions-cell {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .btn-action {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+
+/* Role cell styling */
+.role-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.role-protected-badge {
+    font-size: 14px;
+    cursor: help;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.role-protected-badge:hover {
+    opacity: 1;
+}
+
+/* Delete hint */
+.delete-hint {
+    font-size: 11px;
+    color: #666;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.delete-disabled-hint {
+    font-size: 10px;
+    color: #999;
+    font-style: italic;
+    margin-top: 4px;
+    display: block;
+}
+
+/* Disabled role options */
+select option:disabled {
+    color: #999;
+    background-color: #f5f5f5;
+}
+
+/* Protection badges in mobile */
+.mobile-user-details .role-protected-badge {
+    font-size: 12px;
+    margin-left: 8px;
+    color: #666;
+}
+
+/* Visual feedback for protected users */
+tr .role-badge.role-super-admin {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #8b7500;
+    border: 1px solid #ffd700;
+    position: relative;
+    border: 1px solid black;
+}
+
+tr .role-badge.role-admin {
+    background: linear-gradient(135deg, #4169e1, #6a5acd);
+    color: white;
+    border: 1px solid #4169e1;
+}
+
+/* Hover effects for protected users */
+tr:hover .role-badge.role-super-admin {
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+tr:hover .role-badge.role-admin {
+    box-shadow: 0 0 8px rgba(65, 105, 225, 0.3);
+}
+
+/* Warning icon for protected actions */
+.protected-warning {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+}
+
+/* Admin permission info */
+.admin-permission-info {
+    margin-top: 10px;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #3498db;
+    font-size: 12px;
+}
+
+.admin-permission-info strong {
+    color: #2c3e50;
+}
+
+.admin-permission-info ul {
+    margin: 4px 0 0 16px;
+    color: #555;
+}

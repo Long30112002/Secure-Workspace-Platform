@@ -1,0 +1,736 @@
+.workspace-dashboard {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.workspace-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.workspace-info h1 {
+    margin: 0 0 0.5rem 0;
+    color: #1f2937;
+}
+
+.workspace-subdomain {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin: 0 0 1rem 0;
+}
+
+.workspace-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.permission-badge {
+    background: #f3f4f6;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+}
+
+.role-tag {
+    font-weight: bold;
+    color: #4f46e5;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.workspace-tabs {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 2rem;
+}
+
+.tab-button {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.tab-button:hover {
+    color: #4f46e5;
+}
+
+.tab-button.active {
+    color: #4f46e5;
+    border-bottom-color: #4f46e5;
+}
+
+.tab-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.tab-content {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+/* Overview */
+.overview-content {
+    display: grid;
+    gap: 2rem;
+}
+
+.permissions-section h3,
+.role-distribution h3 {
+    margin: 0 0 1rem 0;
+    color: #1f2937;
+}
+
+.permissions-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.permission-tag {
+    background: #e0e7ff;
+    color: #4f46e5;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+}
+
+.role-bars {
+    display: grid;
+    gap: 1rem;
+}
+
+.role-bar {
+    display: grid;
+    grid-template-columns: 100px 1fr 60px;
+    align-items: center;
+    gap: 1rem;
+}
+
+.role-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.bar-container {
+    height: 20px;
+    background: #f3f4f6;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background: #4f46e5;
+    border-radius: 10px;
+}
+
+.role-count {
+    text-align: right;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+/* Members */
+.section-header {
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+
+.section-header .member-actions-header {
+    display: flex;
+}
+
+.invite-form {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.members-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.member-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+}
+
+.member-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.member-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #6b7280;
+}
+
+.member-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.member-details {
+    flex: 1;
+}
+
+.member-name {
+    font-weight: 500;
+    color: #1f2937;
+}
+
+.member-email {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.member-meta {
+    color: #9ca3af;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.member-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.role-select {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    background: white;
+}
+
+.role-select:disabled {
+    background: #f3f4f6;
+    cursor: not-allowed;
+}
+
+/* Invitations - Layout 2 cột*/
+.invitations-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.workspace-invitation-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    /* Cột trái chiếm không gian còn lại, cột phải auto */
+    gap: 1.5rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    align-items: center;
+}
+
+.workspace-invitation-info {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 0;
+    /* Quan trọng: Cho phép co lại */
+}
+
+.workspace-invitation-email {
+    font-weight: 500;
+    color: #1f2937;
+    word-break: break-word;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.workspace-invitation-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+}
+
+.workspace-invitation-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.8125rem;
+}
+
+.workspace-invitation-tag-role {
+    background: #e0e7ff;
+    color: #4f46e5;
+}
+
+.workspace-invitation-tag-expires {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.workspace-invitation-tag-inviter {
+    background: #ecfdf5;
+    color: #065f46;
+}
+
+.workspace-invitation-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    /* Không cho phép co lại */
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+    .workspace-invitation-card {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .workspace-invitation-actions {
+        justify-content: flex-end;
+        margin-top: 0.5rem;
+    }
+}
+
+/* Nếu vẫn có vấn đề, thêm các style này để debug */
+.workspace-invitation-debug {
+    border: 2px solid red;
+    /* Debug: Xem phạm vi của card */
+}
+
+.workspace-invitation-info-debug {
+    border: 1px dashed blue;
+    /* Debug: Xem phạm vi của info */
+}
+
+.workspace-invitation-actions-debug {
+    border: 1px dashed green;
+    /* Debug: Xem phạm vi của actions */
+}
+
+/* Settings */
+.settings-section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.settings-section:last-child {
+    border-bottom: none;
+}
+
+.settings-section h3 {
+    margin: 0 0 1rem 0;
+    color: #1f2937;
+}
+
+.form-help {
+    display: block;
+    margin-top: 0.25rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.danger-zone {
+    border-color: #fca5a5;
+}
+
+.danger-actions {
+    background: #fef2f2;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.danger-note {
+    margin-top: 0.5rem;
+    color: #dc2626;
+    font-size: 0.875rem;
+}
+
+/* Loading & Error States */
+.loading_workspace {
+    text-align: center;
+    padding: 4rem;
+}
+
+.loading-workspace-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #4f46e5;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.not-found {
+    text-align: center;
+    padding: 4rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: #4f46e5;
+    color: white;
+    border-color: #4f46e5;
+}
+
+.btn-primary:hover {
+    background: #4338ca;
+}
+
+.btn-outline {
+    background: white;
+    color: #4f46e5;
+    border-color: #4f46e5;
+}
+
+.btn-outline:hover {
+    background: #f5f3ff;
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.btn-danger:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-small {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Pagination Styles */
+.pagination-container-new {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    margin-top: 20px;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.page-btn {
+    padding: 6px 12px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 40px;
+    font-size: 14px;
+}
+
+.page-btn:hover:not(:disabled) {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+.page-btn.active {
+    background: #4f46e5;
+    color: white;
+    border-color: #4f46e5;
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-ellipsis {
+    padding: 6px 12px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+}
+
+.pagination-btn {
+    padding: 8px 16px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.prev-btn {
+    border-color: #4f46e5;
+    color: #4f46e5;
+}
+
+.next-btn {
+    background: #4f46e5;
+    color: white;
+    border-color: #4f46e5;
+}
+
+.next-btn:hover:not(:disabled) {
+    background: #4338ca;
+    border-color: #4338ca;
+}
+
+.page-jump-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.page-jump-label {
+    font-weight: 500;
+    color: #64748b;
+}
+
+.page-input {
+    padding: 6px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    width: 80px;
+    font-size: 14px;
+}
+
+.page-input:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.page-input-btn {
+    padding: 6px 16px;
+    background: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-weight: 500;
+}
+
+.page-input-btn:hover:not(:disabled) {
+    background: #4338ca;
+}
+
+.page-input-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-stats {
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.total-pages-info {
+    color: #94a3b8;
+    margin-left: 5px;
+}
+
+.pagination-info {
+    font-weight: 500;
+}
+
+.pagination-total {
+    margin-left: 10px;
+    color: #94a3b8;
+}
+
+.limit-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f8fafc;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.limit-selector label {
+    font-weight: 500;
+    color: #475569;
+}
+
+/* Loading state for pagination */
+.pagination-loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .pagination-controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .page-numbers {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .pagination-left,
+    .pagination-right {
+        order: 1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .page-jump-container {
+        justify-content: center;
+    }
+
+    .pagination-stats {
+        text-align: center;
+    }
+}

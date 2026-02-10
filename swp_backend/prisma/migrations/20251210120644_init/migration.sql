@@ -1,0 +1,14 @@
+/*
+  Warnings:
+
+  - A unique constraint covering the columns `[passwordResetToken]` on the table `User` will be added. If there are existing duplicate values, this will fail.
+
+*/
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "lastPasswordChange" TIMESTAMP(3),
+ADD COLUMN     "passwordResetAttempts" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "passwordResetExpires" TIMESTAMP(3),
+ADD COLUMN     "passwordResetToken" TEXT;
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_passwordResetToken_key" ON "User"("passwordResetToken");

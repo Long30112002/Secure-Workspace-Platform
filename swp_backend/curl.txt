@@ -1,0 +1,2 @@
+curl -X GET "http://localhost:3000/auth/verify-email?token=253c9c7b76cc9bc9b981b91e0ed8c412b5eb55a58be09cf1a0cf5071e75e153d" \
+  -H "Accept: application/json"

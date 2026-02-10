@@ -1,0 +1,448 @@
+/* WorkspacesPage.css */
+.workspaces-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+}
+
+.page-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Workspaces Grid */
+.workspaces-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* Workspace Card */
+.workspace-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.workspace-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-color: #d0d7de;
+}
+
+.workspace-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.workspace-icon {
+    font-size: 2rem;
+    background: #f8f9fa;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.workspace-card-header h3 {
+    font-size: 1.25rem;
+    color: #1a1a1a;
+    margin: 0;
+    flex: 1;
+}
+
+/* Role Badges */
+.role-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.role-badge.admin {
+    background: #e7f5ff;
+    color: #1864ab;
+    border: 1px solid #a5d8ff;
+}
+
+.role-badge.user {
+    background: #f3f0ff;
+    color: #5f3dc4;
+    border: 1px solid #d0bfff;
+}
+
+.role-badge.moderator {
+    background: #fff3bf;
+    color: #e67700;
+    border: 1px solid #ffd43b;
+}
+
+.role-badge.super_admin {
+    background: linear-gradient(135deg, #ff6b6b, #ff8787);
+    color: white;
+    border: none;
+}
+
+/* Workspace Info */
+.workspace-info {
+    margin-bottom: 1.5rem;
+    flex: 1;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item .label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.info-item .value {
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+/* Plan Styling */
+.plan {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.plan.free {
+    background: #e7f5ff;
+    color: #1864ab;
+}
+
+.plan.pro {
+    background: #fff3bf;
+    color: #e67700;
+}
+
+.plan.enterprise {
+    background: linear-gradient(135deg, #ffd8a8, #ffa94d);
+    color: #d9480f;
+}
+
+.role {
+    padding: 0.25rem 0.75rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: #495057;
+}
+
+/* Workspace Actions */
+.workspace-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: auto;
+}
+
+.workspace-actions .btn {
+    flex: 1;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.workspace-actions .btn-primary {
+    background: #4263eb;
+    color: white;
+    border: none;
+}
+
+.workspace-actions .btn-primary:hover {
+    background: #364fc7;
+    transform: translateY(-1px);
+}
+
+.workspace-actions .btn-outline {
+    background: white;
+    color: #495057;
+    border: 1px solid #dee2e6;
+}
+
+.workspace-actions .btn-outline:hover {
+    background: #f8f9fa;
+    border-color: #adb5bd;
+}
+
+/* Add New Workspace Card */
+.workspace-card.add-new {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border: 2px dashed #adb5bd;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 280px;
+    cursor: pointer;
+}
+
+.workspace-card.add-new:hover {
+    transform: none;
+    border-color: #4263eb;
+    background: linear-gradient(135deg, #edf2ff, #e7f5ff);
+}
+
+.add-new-content {
+    text-align: center;
+    padding: 2rem;
+}
+
+.add-icon {
+    font-size: 3rem;
+    color: #4263eb;
+    margin-bottom: 1rem;
+    background: white;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 4px 12px rgba(66, 99, 235, 0.15);
+}
+
+.add-new-content h3 {
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+}
+
+.add-new-content p {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.add-new-content .btn-secondary {
+    background: #4263eb;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.add-new-content .btn-secondary:hover {
+    background: #364fc7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .workspaces-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .workspace-card-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+    
+    .workspace-icon {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .workspace-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .workspaces-page {
+        padding: 1rem 0.5rem;
+    }
+    
+    .workspace-card {
+        padding: 1rem;
+    }
+    
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+}
+
+/* Empty State */
+.workspaces-empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 2px dashed #dee2e6;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+}
+
+.workspaces-empty-state h3 {
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.workspaces-empty-state p {
+    color: #868e96;
+    margin-bottom: 2rem;
+}
+
+/* Loading State */
+.workspaces-loading {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.workspace-card-skeleton {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    height: 280px;
+}
+
+.skeleton-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.skeleton-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+.skeleton-title {
+    flex: 1;
+    height: 24px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+.skeleton-info {
+    margin-bottom: 1.5rem;
+}
+
+.skeleton-line {
+    height: 16px;
+    margin-bottom: 0.75rem;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+.skeleton-line.short {
+    width: 60%;
+}
+
+.skeleton-line.medium {
+    width: 80%;
+}
+
+.skeleton-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: auto;
+}
+
+.skeleton-button {
+    height: 40px;
+    border-radius: 8px;
+    flex: 1;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Domain Preview */
+.domain-preview {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    background: #f8f9fa;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #495057;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.domain-preview .protocol {
+    color: #868e96;
+}
+
+.domain-preview .domain-name {
+    color: #4263eb;
+    font-weight: 500;
+}
+
+.domain-preview .tld {
+    color: #495057;
+}

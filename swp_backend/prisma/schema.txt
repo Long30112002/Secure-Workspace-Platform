@@ -1,0 +1,502 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==================== EXISTING MODELS (GIỮ NGUYÊN) ====================
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  // name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Security & Authentication
+  lockedUntil         DateTime?
+  isActive            Boolean   @default(true)
+  failedLoginAttempts Int       @default(0)
+  lastLoginAttempt    DateTime?
+  lastLoginAt         DateTime?
+
+  // JWT & Session Management
+  refreshToken        String?
+  refreshTokenExpires DateTime?
+  lastTokenRefresh    DateTime?
+
+  // Role & Permissions
+  role        UserRole @default(USER)
+  permissions String[] @default([]) // JSON array of permissions
+
+  // Profile (optional)
+  profile Profile?
+
+  // Relations
+  sessions             Session[]
+  workspaceMemberships WorkspaceMember[] // THÊM: User trong nhiều workspace
+  createdWorkspaces    Workspace[] // THÊM: Workspace user tạo ra
+
+  // Email verification
+  isEmailVerified          Boolean   @default(false)
+  emailVerificationToken   String?
+  emailVerificationExpires DateTime?
+
+  // Password reset fields
+  passwordResetToken    String?   @unique
+  passwordResetExpires  DateTime?
+  passwordResetAttempts Int       @default(0)
+  lastPasswordChange    DateTime?
+
+  // Soft delete tracking
+  deletedAt DateTime? // Thời điểm bị xóa
+  deletedBy Int? // ID của admin/user đã xóa (null nếu tự xóa)
+
+  auditLogs                     AuditLog[]
+  workspaceAuditLogs            WorkspaceAuditLog[] // THÊM: Audit logs trong workspace
+  notifications                 Notification[]
+  sentNotifications             Notification[]                 @relation("NotificationSender") // Thông báo user gửi
+  notificationSettings          NotificationSetting? // Cài đặt thông báo
+  workspaceNotificationSettings WorkspaceNotificationSetting[]
+  notificationLogs              NotificationLog[]
+  posts                         Post[]
+  postLikes                     PostLike[]
+  comments                      PostComment[]
+
+  // Indexes
+  @@index([email])
+  @@index([createdAt])
+  @@index([lockedUntil])
+  @@index([isActive])
+  @@index([role])
+  @@index([refreshTokenExpires])
+}
+
+// Profile extension (optional)
+model Profile {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
+  firstName String?
+  lastName  String?
+  phone     String?
+  avatarUrl String?
+  bio       String?
+  updatedAt DateTime @updatedAt
+}
+
+// Session tracking (for multi-device support)
+model Session {
+  id           String   @id @default(cuid())
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  deviceInfo   String? // Browser/Device info
+  ipAddress    String?
+  userAgent    String?
+  lastActivity DateTime @default(now())
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+// Role enum
+enum UserRole {
+  SUPER_ADMIN // Full system access
+  ADMIN // Manage users and content
+  MODERATOR // Moderate content
+  USER // Regular user
+  GUEST // Limited access
+}
+
+// Audit Log (cho toàn hệ thống)
+model AuditLog {
+  id     Int  @id @default(autoincrement())
+  userId Int // ID của admin thực hiện hành động
+  admin  User @relation(fields: [userId], references: [id])
+
+  action     String // CREATE_USER, UPDATE_USER, DELETE_USER, RESTORE_USER, etc.
+  entityType String // "user"
+  entityId   Int? // ID của entity bị ảnh hưởng
+
+  details   Json? // Chi tiết thay đổi (JSON format)
+  ipAddress String?
+  userAgent String?
+
+  createdAt DateTime @default(now())
+
+  // Indexes
+  @@index([userId])
+  @@index([entityType])
+  @@index([action])
+  @@index([createdAt])
+}
+
+// Workspace (Tenant)
+model Workspace {
+  id          String  @id @default(cuid())
+  name        String
+  subdomain   String  @unique // acme.yourapp.com
+  description String?
+
+  // Owner
+  ownerId Int
+  owner   User @relation(fields: [ownerId], references: [id])
+
+  // Workspace settings
+  plan     WorkspacePlan @default(FREE)
+  settings Json? // Custom settings
+
+  // Billing (optional)
+  stripeCustomerId   String?
+  subscriptionStatus SubscriptionStatus @default(TRIAL)
+  trialEndsAt        DateTime?
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Soft delete
+
+  // Relations
+  members                       WorkspaceMember[]
+  invites                       WorkspaceInvite[]
+  auditLogs                     WorkspaceAuditLog[]
+  notifications                 Notification[]
+  workspaceNotificationSettings WorkspaceNotificationSetting[]
+  posts                         Post[]
+
+  // Indexes
+  @@index([subdomain])
+  @@index([ownerId])
+  @@index([plan])
+  @@index([createdAt])
+}
+
+// Workspace Member (User trong workspace)
+model WorkspaceMember {
+  id          String    @id @default(cuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Role trong workspace
+  role WorkspaceRole @default(MEMBER)
+
+  // Metadata
+  joinedAt   DateTime  @default(now())
+  invitedBy  Int? // User ID
+  lastActive DateTime?
+
+  // Unique constraint
+  @@unique([workspaceId, userId])
+  // Indexes
+  @@index([workspaceId])
+  @@index([userId])
+  @@index([role])
+}
+
+// Workspace Invite
+model WorkspaceInvite {
+  id          String        @id @default(cuid())
+  workspaceId String
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  email       String
+  role        WorkspaceRole @default(MEMBER)
+  token       String        @unique
+  invitedBy   Int // User ID
+
+  status    InviteStatus @default(PENDING)
+  expiresAt DateTime
+
+  createdAt DateTime @default(now())
+
+  @@unique([workspaceId, email])
+  @@index([token])
+  @@index([expiresAt])
+}
+
+// Workspace Audit Log
+model WorkspaceAuditLog {
+  id          Int       @id @default(autoincrement())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+
+  action     String // CREATE_MEMBER, UPDATE_SETTINGS, etc.
+  entityType String // "member", "invite", "settings"
+  entityId   String? // ID của entity
+
+  details   Json? // Chi tiết thay đổi
+  ipAddress String?
+  userAgent String?
+
+  createdAt DateTime @default(now())
+
+  // Indexes
+  @@index([workspaceId])
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+// Notification Model
+model Notification {
+  id     String @id @default(cuid())
+  userId Int // User nhận thông báo
+  user   User   @relation(fields: [userId], references: [id])
+
+  // Notification Type
+  type NotificationType
+
+  // Content
+  title   String?
+  message String
+  data    Json? // Additional data in JSON format
+
+  // Status
+  read     Boolean              @default(false)
+  priority NotificationPriority @default(MEDIUM)
+  archived Boolean              @default(false)
+
+  // Context
+  workspaceId String?
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id])
+
+  // Related Entity
+  entityId   String? // ID của entity liên quan (post, comment, file, etc.)
+  entityType String? // Loại entity (post, comment, file, etc.)
+
+  // Action
+  actionUrl   String? // URL để navigate khi click
+  actionLabel String? // Label cho action button
+
+  // Sender (người gửi thông báo)
+  senderId Int?
+  sender   User? @relation("NotificationSender", fields: [senderId], references: [id])
+
+  // Metadata
+  metadata Json? // Additional metadata
+
+  // Timestamps
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  expiresAt DateTime? // Thời gian hết hạn (cho invitations, etc.)
+
+  // Indexes
+  @@index([userId])
+  @@index([read])
+  @@index([type])
+  @@index([createdAt])
+  @@index([workspaceId])
+  @@index([archived])
+  @@index([expiresAt])
+}
+
+// User Notification Settings
+model NotificationSetting {
+  id     Int  @id @default(autoincrement())
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id])
+
+  // Global settings
+  enabled              Boolean @default(true)
+  emailNotifications   Boolean @default(true)
+  pushNotifications    Boolean @default(true)
+  desktopNotifications Boolean @default(true)
+  soundEnabled         Boolean @default(false)
+
+  // Per-type settings
+  settings Json @default("{}") // JSON với cấu hình cho từng loại
+
+  // Do Not Disturb
+  doNotDisturbStart String? // Start time for DND
+  doNotDisturbEnd   String? // End time for DND
+  quietHoursEnabled Boolean @default(false)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// Notification Preferences per Workspace
+model WorkspaceNotificationSetting {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+
+  // Workspace-specific settings
+  enabled   Boolean   @default(true)
+  muteUntil DateTime?
+
+  // Per-type settings for this workspace
+  settings Json @default("{}")
+
+  // Unique constraint
+  @@unique([userId, workspaceId])
+  @@index([userId])
+  @@index([workspaceId])
+}
+
+// Notification Log for auditing
+model NotificationLog {
+  id             Int     @id @default(autoincrement())
+  notificationId String?
+  userId         Int
+  user           User    @relation(fields: [userId], references: [id])
+
+  action  String // SENT, READ, CLICKED, DISMISSED
+  channel String? // EMAIL, PUSH, IN_APP
+
+  details   Json?
+  ipAddress String?
+  userAgent String?
+
+  createdAt DateTime @default(now())
+
+  @@index([notificationId])
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  title   String
+  content String
+
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id])
+
+  isPinned Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  attachments PostAttachment[]
+  likes       PostLike[]
+  comments    PostComment[]
+
+  @@index([workspaceId])
+  @@index([authorId])
+  @@index([createdAt])
+}
+
+model PostAttachment {
+  id     String @id @default(cuid())
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  name String
+  type String
+  url  String
+  size Int
+
+  createdAt DateTime @default(now())
+
+  @@index([postId])
+}
+
+model PostLike {
+  id     String @id @default(cuid())
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([postId, userId])
+  @@index([postId])
+  @@index([userId])
+}
+
+model PostComment {
+  id     String @id @default(cuid())
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id])
+
+  content  String
+  parentId String? // For nested comments
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([postId])
+  @@index([authorId])
+  @@index([parentId])
+}
+
+// ENUMS 
+enum WorkspaceRole {
+  OWNER // Full control in workspace
+  ADMIN // Manage members and settings
+  EDITOR // Can edit content
+  VIEWER // Read-only access
+  MEMBER // Basic member (default)
+}
+
+enum NotificationPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum WorkspacePlan {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+enum NotificationType {
+  WORKSPACE_INVITATION // Mời vào workspace
+  WORKSPACE_POST // Bài viết mới trong workspace
+  WORKSPACE_MENTION // Được mention trong bài viết/bình luận
+  WORKSPACE_COMMENT // Bình luận mới trên bài viết
+  WORKSPACE_FILE // File mới được upload/share
+  WORKSPACE_EVENT // Sự kiện mới
+  SYSTEM // Thông báo hệ thống
+  BILLING // Thông báo thanh toán
+  SECURITY // Thông báo bảo mật
+  ACHIEVEMENT // Thành tựu đạt được
+}
+
+enum SubscriptionStatus {
+  TRIAL
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  EXPIRED
+}
+
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+  EXPIRED
+  REVOKED
+}
